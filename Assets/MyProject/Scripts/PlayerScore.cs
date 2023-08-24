@@ -6,11 +6,6 @@ public class PlayerScore : MonoBehaviour
 {
     private int _score;
 
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out Player player))

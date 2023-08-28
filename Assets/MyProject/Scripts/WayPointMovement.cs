@@ -7,11 +7,16 @@ public class WayPointMovement : MonoBehaviour
     [SerializeField] private Transform _path;
     [SerializeField] private float _speed;
 
+    private readonly int _idle = Animator.StringToHash("IdleBool");
+
+    private WaitForSeconds _waitForSeconds;
+    private float _delay;
     private Transform _target;
     private Transform[] _points;
     private int _currentPoint = 0;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
+    private Coroutine _coroutine;
 
     private void Start()
     {
@@ -25,9 +30,11 @@ public class WayPointMovement : MonoBehaviour
             _points[i] = _path.GetChild(i);
         }
 
+        _delay = 3f;
+        _waitForSeconds = new WaitForSeconds(_delay);
         _target = _points[_currentPoint];
 
-        StartCoroutine(PatrolRoutine());
+        _coroutine = StartCoroutine(PatrolRoutine());
     }
 
     private void Update()
@@ -41,11 +48,11 @@ public class WayPointMovement : MonoBehaviour
         {
             if (transform.position == _target.position)
             {
-                _animator.SetBool("IdleBool", true);
+                _animator.SetBool(_idle, true);
 
-                yield return new WaitForSeconds(3f);
+                yield return _waitForSeconds;
 
-                _animator.SetBool("IdleBool", false);
+                _animator.SetBool(_idle, false);
 
                 _spriteRenderer.flipX = true;
 

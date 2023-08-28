@@ -15,5 +15,4 @@ public class PlayerScore : MonoBehaviour
             Debug.Log("Score++");
         }
     }
-
 }

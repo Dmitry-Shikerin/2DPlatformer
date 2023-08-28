@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent (typeof (Animator))]
+[RequireComponent(typeof (SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
@@ -22,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKey(KeyCode.D)) //Движение вправо
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(_speed * Time.deltaTime, 0, 0);
 
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool(_run, false);
         }
 
-        if (Input.GetKey(KeyCode.A)) //Движение влево
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
 
@@ -50,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool(_run, false);
         }
 
-        if (Input.GetKey(KeyCode.Space)) //Прыжек
+        if (Input.GetKey(KeyCode.Space))
         {
             transform.Translate( 0, _speed * Time.deltaTime, 0);
         }

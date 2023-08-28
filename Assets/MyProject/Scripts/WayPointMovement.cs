@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent (typeof(SpriteRenderer))]
 public class WayPointMovement : MonoBehaviour
 {
     [SerializeField] private Transform _path;
@@ -39,7 +41,8 @@ public class WayPointMovement : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position,
+            _target.position, _speed * Time.deltaTime);
     }
 
     private IEnumerator PatrolRoutine()

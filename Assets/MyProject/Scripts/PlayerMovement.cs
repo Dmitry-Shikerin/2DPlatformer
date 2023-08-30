@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent (typeof (Animator))]
-[RequireComponent(typeof (SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    private readonly int _run = Animator.StringToHash("RunBool");
-    private readonly int _jump = Animator.StringToHash("JumpBool");
+    private readonly int _run = Animator.StringToHash("isRun");
+    private readonly int _jump = Animator.StringToHash("isJump");
 
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
@@ -21,9 +21,24 @@ public class PlayerMovement : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Surfece>(out Surfece surface))
+        {
+            _animator.SetBool(_jump, false);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Surfece>(out Surfece surface))
+        {
+            _animator.SetBool(_jump, true);
+        }
+    }
+
     private void Update()
     {
-
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(_speed * Time.deltaTime, 0, 0);
@@ -33,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool(_run, true);
         }
 
-        if(Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D))
         {
             _animator.SetBool(_run, false);
         }
@@ -47,24 +62,15 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool(_run, true);
         }
 
-        if (Input.GetKeyUp(KeyCode.A)) 
+        if (Input.GetKeyUp(KeyCode.A))
         {
             _animator.SetBool(_run, false);
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.Translate( 0, _speed * Time.deltaTime, 0);
-        }
+            transform.Translate(0, _speed * Time.deltaTime, 0);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _animator.SetBool(_jump, true);
-        }
-
-        if (Input.GetKeyUp (KeyCode.Space))
-        {
-            _animator.SetBool(_jump, false);
         }
     }
 }

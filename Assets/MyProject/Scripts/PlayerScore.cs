@@ -8,11 +8,11 @@ public class PlayerScore : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out Player player))
+        if (collision.TryGetComponent<Gem>(out Gem gem))
         {
             _score++;
 
-            Debug.Log("Score++");
+            Debug.Log($"Score: {_score}");
         }
     }
 }

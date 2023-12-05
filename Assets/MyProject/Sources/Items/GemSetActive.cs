@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using MyProject.Sources.Players;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GemSetActive : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out Player player))
+        if (collision.TryGetComponent(out Player player))
         {
             Debug.Log("CollisionGemScore");
 
